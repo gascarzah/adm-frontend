@@ -1,0 +1,141 @@
+import React, { useState } from "react";
+
+import { Link, useNavigate } from "react-router-dom";
+// import { toast, ToastContainer } from "react-toastify";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from "yup";
+import { Alerta } from "../components/Alerta";
+import { useForm } from "react-hook-form";
+import {
+  QueryClient,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
+import { login } from "../api/authAPI";
+
+const loginSchema = Yup.object().shape({
+  email: Yup.string()
+    .email("Email no valido")
+    .required("El email es obligatorio"),
+  password: Yup.string().required("Password obligatorio"),
+});
+
+const Login = () => {
+  // const queryClient = new QueryClient();
+  // const mutation = useMutation({
+  //   mutationKey: ["login"],
+  //   mutationFn: login,
+  //   onError: (error, variables, context) => {
+  //     // An error happened!
+  //     console.log(`rolling back optimistic update with id ${context.id}`);
+  //   },
+  //   onSuccess: (data, variables, context) => {
+  //     console.log("data ", data);
+  //     console.log("variables ", variables);
+  //     console.log("context ", context);
+
+  //     queryClient.setQueryData(["user"], data.user);
+
+  //     console.log("login queryClient", queryClient);
+  //     navigate("/dashboard");
+  //   },
+  //   onSettled: (data, error, variables, context) => {
+  //     // Error or success... doesn't matter!
+  //   },
+  // });
+
+  const formOptions = { resolver: yupResolver(loginSchema) };
+
+  const { register, formState, handleSubmit } = useForm(formOptions);
+  const { errors } = formState;
+
+  const [alerta, setAlerta] = useState({});
+
+  const navigate = useNavigate();
+
+  const handleOnSubmit = async (values) => {
+    const { email, password } = values;
+
+    if (password.length < 6) {
+      setAlerta({
+        msg: "password es muy corto, agrega minimo 6 caracteres",
+        error: true,
+      });
+
+      return;
+    }
+    // mutation.mutate(values);
+
+    try {
+      const res = await login(values);
+      console.log("response ", res);
+      navigate("/dashboard");
+    } catch (e) {}
+  };
+
+  const { msg } = alerta;
+
+  return (
+    <>
+      <h1 className="text-sky-600 text-center font-black text-6xl ">
+        Inicia Sesion
+      </h1>
+      {/* <ToastContainer /> */}
+      {msg && <Alerta msg={alerta.msg} error={alerta.error} />}
+
+      <form
+        className={"my-10 bg-white shadow rounded p-10"}
+        onSubmit={handleSubmit(handleOnSubmit)}
+      >
+        <div className="my-5">
+          <label
+            htmlFor="email"
+            className="uppercase text-gray-600 block font-bold"
+          >
+            Email
+          </label>
+          <input
+            id="email"
+            type="email"
+            placeholder="Email"
+            className="w-full mt-3 p-3 border rounded-xl bg-gray-50 "
+            name={"email"}
+            {...register("email")}
+          />
+          {errors.email ? (
+            <Alerta msg={errors.email?.message} error={true} />
+          ) : null}
+        </div>
+        <div className="my-5">
+          <label
+            htmlFor="password"
+            className="uppercase text-gray-600 block font-bold"
+          >
+            Password
+          </label>
+          <input
+            id="password"
+            type="password"
+            placeholder="Password de Registro"
+            className="w-full mt-3 p-3 border rounded-xl bg-gray-50 "
+            name={"password"}
+            {...register("password")}
+          />
+          {errors.password ? (
+            <Alerta msg={errors.password?.message} error={true} />
+          ) : null}
+        </div>
+
+        <input
+          type="submit"
+          value="Iniciar Sesion"
+          className="bg-sky-700 mb-5 w-full rounded py-3 text-white font-bold
+            uppercase hover:cursor-pointer hover:bg-sky-800 transition-colors"
+        />
+      </form>
+    </>
+  );
+};
+
+export default Login;
