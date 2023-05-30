@@ -29,6 +29,12 @@ const Sidebar = () => {
         >
           Usuario
         </Link>
+        <Link
+          to={"listar-menu"}
+          className="bg-indigo-600 w-full p-3 text-white uppercase font-bold block mt-5 text-center rounded-lg"
+        >
+          Menu
+        </Link>
       </div>
     </aside>
   );

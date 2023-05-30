@@ -5,6 +5,7 @@ import auth from './slices/authSlice'
 import rol from './slices/rolSlice'
 import maestra from './slices/maestraSlice'
 import tipoEmpleado from './slices/tipoEmpleadoSlice'
+import menu from './slices/menuSlice'
 export default configureStore({
   reducer: {
     usuario,
@@ -13,5 +14,6 @@ export default configureStore({
     empresa,
     maestra,
     tipoEmpleado,
+    menu
   }
 })

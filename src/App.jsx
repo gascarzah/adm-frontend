@@ -18,6 +18,9 @@ import EditarEmpresa from "./pages/empresa/Editar";
 import ListarRol from "./pages/rol";
 import AgregarRol from "./pages/rol/Agregar";
 import EditarRol from "./pages/rol/Editar";
+import ListarMenu from "./pages/menu";
+import AgregarMenu from "./pages/menu/Agregar";
+import EditarMenu from "./pages/menu/Editar";
 
 function App() {
   function NavigateFunctionComponent(props) {
@@ -74,8 +77,11 @@ function App() {
             <Route path="listar-rol/editar-rol/:id" element={<EditarRol />} />
 
             <Route path="listar-menu" element={<ListarMenu />} />
-            {/* <Route path="listar-menu/agregar-menu" element={<AgregarMenu />} />
-            <Route path="listar-menu/editar-menu/:id" element={<EditarMenu />} /> */}
+            <Route path="listar-menu/agregar-menu" element={<AgregarMenu />} />
+            <Route
+              path="listar-menu/editar-menu/:id"
+              element={<EditarMenu />}
+            />
           </Route>
         </Routes>
       </BrowserRouter>
