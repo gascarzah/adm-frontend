@@ -72,6 +72,10 @@ function App() {
             <Route path="listar-rol" element={<ListarRol />} />
             <Route path="listar-rol/agregar-rol" element={<AgregarRol />} />
             <Route path="listar-rol/editar-rol/:id" element={<EditarRol />} />
+
+            <Route path="listar-menu" element={<ListarMenu />} />
+            {/* <Route path="listar-menu/agregar-menu" element={<AgregarMenu />} />
+            <Route path="listar-menu/editar-menu/:id" element={<EditarMenu />} /> */}
           </Route>
         </Routes>
       </BrowserRouter>

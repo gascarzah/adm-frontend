@@ -21,7 +21,7 @@ export const login = createAsyncThunk(
   async (values, { rejectWithValue }) => {
     try {
 
-      const { data } = await clienteAxios.post("/login", values);
+      const { data } = await clienteAxios.post("/auth/login", values);
 
 
       return data

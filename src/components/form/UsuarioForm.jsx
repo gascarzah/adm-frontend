@@ -27,12 +27,10 @@ const nuevoUsuarioSchema = Yup.object().shape({
   email: Yup.string()
     .email("Email no valido")
     .required("El email es obligatorio"),
-  password: Yup.string().required("Password obligatorio"),
-
-  password2: Yup.string().required("Repetir Password obligatorio"),
+  // password: Yup.string().required("Password obligatorio"),
+  // password2: Yup.string().required("Repetir Password obligatorio"),
   idRol: Yup.string().required("Seleccionar un rol"),
   idEmpresa: Yup.string().required("Seleccionar una empresa"),
-  idTipoEmpleado: Yup.string().required("Seleccionar un tipo empleado"),
 });
 
 const UsuarioForm = ({ usuario }) => {
@@ -47,7 +45,6 @@ const UsuarioForm = ({ usuario }) => {
 
   const { roles } = useSelector((state) => state.rol);
   const { empresas } = useSelector((state) => state.empresa);
-  const { tipoEmpleados } = useSelector((state) => state.tipoEmpleado);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -55,8 +52,6 @@ const UsuarioForm = ({ usuario }) => {
     dispatch(getRoles());
 
     dispatch(getEmpresas());
-
-    dispatch(getTipoEmpleados());
   }, []);
 
   useEffect(() => {
@@ -79,35 +74,32 @@ const UsuarioForm = ({ usuario }) => {
       setValue("email", usuario?.email ?? "");
       setValue("idRol", usuario?.roles?.[0]?.idRol ?? "");
       setValue("idEmpresa", usuario?.empleado?.empresa?.idEmpresa ?? "");
-      setValue(
-        "idTipoEmpleado",
-        usuario?.empleado?.tipoEmpleado?.idTipoEmpleado ?? ""
-      );
+      setValue("idEmpleado", usuario?.empleado?.idEmpleado ?? "");
     }
   }, [usuario]);
 
   const handleOnSubmit = (values) => {
-    console.log("values ", values);
-    const { password, password2 } = values;
+    console.log("handleOnSubmit values ", values);
+    // const { password, password2 } = values;
 
-    if (password !== password2) {
-      console.log("passwords no son iguales");
-      setAlerta({
-        msg: "passwords no son iguales",
-        error: true,
-      });
+    // if (password !== password2) {
+    //   console.log("passwords no son iguales");
+    //   setAlerta({
+    //     msg: "passwords no son iguales",
+    //     error: true,
+    //   });
 
-      return;
-    }
+    //   return;
+    // }
 
-    if (password.length < 6) {
-      setAlerta({
-        msg: "password es muy corto, agrega minimo 6 caracteres",
-        error: true,
-      });
+    // if (password.length < 6) {
+    //   setAlerta({
+    //     msg: "password es muy corto, agrega minimo 6 caracteres",
+    //     error: true,
+    //   });
 
-      return;
-    }
+    //   return;
+    // }
 
     if (!values.idUsuario) {
       console.log("registra");
@@ -269,7 +261,7 @@ const UsuarioForm = ({ usuario }) => {
             <Alerta msg={errors.email?.message} error={true} />
           ) : null}
         </div>
-        <div className="my-5">
+        {/* <div className="my-5">
           <label
             htmlFor="password"
             className="uppercase text-gray-600 block font-bold"
@@ -306,7 +298,7 @@ const UsuarioForm = ({ usuario }) => {
           {errors.password2 ? (
             <Alerta msg={errors.password2?.message} error={true} />
           ) : null}
-        </div>
+        </div> */}
 
         <div className="my-5">
           <label
@@ -368,40 +360,6 @@ const UsuarioForm = ({ usuario }) => {
           </select>
           {errors.idEmpresa ? (
             <Alerta msg={errors.idEmpresa?.message} error={true} />
-          ) : null}
-        </div>
-        <div className="my-5">
-          <label
-            htmlFor="idTipoEmpleado"
-            className="uppercase text-gray-600 block font-bold"
-          >
-            Tipo Empleado
-          </label>
-          <select
-            name="idTipoEmpleado"
-            // value={values.idEmpresa}
-            className="w-full mt-3 p-3 border rounded-xl bg-gray-50 "
-            style={{ display: "block" }}
-            {...register("idTipoEmpleado")}
-            // value={usuario?.empleado?.tipoEmpleado?.idTipoEmpleado ?? ""}
-          >
-            <option value="" label="Selecciona una empresa">
-              Select una tipo empleado{" "}
-            </option>
-
-            {tipoEmpleados?.map((tipoEmpleado, index) => {
-              return (
-                <option
-                  key={tipoEmpleado.idTipoEmpleado}
-                  value={tipoEmpleado.idTipoEmpleado}
-                >
-                  {tipoEmpleado.descripcion}
-                </option>
-              );
-            })}
-          </select>
-          {errors.idTipoEmpleado ? (
-            <Alerta msg={errors.idTipoEmpleado?.message} error={true} />
           ) : null}
         </div>
 
