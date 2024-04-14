@@ -1,13 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-const PreviewMenu = ({ menu }) => {
-  console.log("menus que llega", menu);
+const PreviewRolMenu = ({ menu, selectedItems, checkboxHandler }) => {
+  // console.log(isCheck);
   return (
     <>
       <tr>
         <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
-          {menu.idMenu}
+          <input
+            type="checkbox"
+            checked={selectedItems.includes(menu.idMenu)}
+            value={menu.idMenu}
+            onChange={checkboxHandler}
+          />
         </td>
         <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
           {menu.nombre}
@@ -57,4 +62,4 @@ const PreviewMenu = ({ menu }) => {
   );
 };
 
-export default PreviewMenu;
+export default PreviewRolMenu;

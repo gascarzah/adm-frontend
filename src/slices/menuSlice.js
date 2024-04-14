@@ -107,6 +107,19 @@ export const getMenus = createAsyncThunk(
     }
 )
 
+export const getMenusPorRol = createAsyncThunk(
+    'getMenusPorRol',
+    async (values, { rejectWithValue }) => {
+        try {
+            const { data } = await clienteAxios.get(`/menus/rol`, values);
+            return data
+        } catch (error) {
+
+            return rejectWithValue(error.response.data)
+        }
+    }
+)
+
 const menuslice = createSlice({
     name: 'menu',
     initialState,
@@ -191,6 +204,20 @@ const menuslice = createSlice({
                 state.code = payload.status
                 state.message = payload.message
                 state.menus = []
+            })
+            .addCase(getMenusPorRol.fulfilled, (state, { payload }) => {
+                console.log('fulfilled getMenu payload', payload)
+                // state.loading = 'grabo'
+                state.loading = false
+                state.code = 201
+                state.message = 'se encontro'
+                state.menus = payload
+            })
+            .addCase(getMenusPorRol.rejected, (state, { payload }) => {
+                console.log('rejected getMenu payload', payload)
+                state.loading = false
+                state.code = payload.status
+                state.message = payload.message
             })
     }
 

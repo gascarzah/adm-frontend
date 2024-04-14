@@ -35,6 +35,12 @@ const Sidebar = () => {
         >
           Menu
         </Link>
+        <Link
+          to={"listar-rol-menu"}
+          className="bg-indigo-600 w-full p-3 text-white uppercase font-bold block mt-5 text-center rounded-lg"
+        >
+          Rol por Menu
+        </Link>
       </div>
     </aside>
   );

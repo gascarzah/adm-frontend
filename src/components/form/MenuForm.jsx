@@ -16,6 +16,8 @@ import {
 
 const menuSchema = Yup.object().shape({
   nombre: Yup.string().required("El nombre es obligatorio"),
+
+  path: Yup.string().required("El path obligatorio"),
 });
 
 const MenuForm = ({ menu }) => {
@@ -24,13 +26,13 @@ const MenuForm = ({ menu }) => {
     useForm(formOptions);
   const { errors } = formState;
   const [alerta, setAlerta] = useState({});
-
+  const [checked, setChecked] = React.useState(true);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleOnSubmit = (values, resetForm) => {
     if (!values.idMenu) {
-      dispatch(registrarMenu(values))
+      dispatch(registrarMenu({ ...values, activo: checked }))
         .unwrap()
         .then((resultado) => {
           console.log("resultado ===>> ", resultado);
@@ -44,7 +46,7 @@ const MenuForm = ({ menu }) => {
           // toast.error(errores.message);
         });
     } else {
-      dispatch(modificarMenu(values))
+      dispatch(modificarMenu({ ...values, activo: checked }))
         .unwrap()
         .then((resultado) => {
           console.log("resultado modificarMenu ===>> ", resultado);
@@ -61,9 +63,16 @@ const MenuForm = ({ menu }) => {
     if (menu) {
       setValue("idMenu", menu.idMenu ?? "");
       setValue("nombre", menu.nombre ?? "");
+      setValue("path", menu.path ?? "");
+
+      setChecked(menu.activo);
     }
   }, [menu]);
   const { msg } = alerta;
+
+  const handleChange = () => {
+    setChecked(!checked);
+  };
 
   return (
     <>
@@ -93,7 +102,35 @@ const MenuForm = ({ menu }) => {
             <Alerta msg={errors.nombre?.message} error={true} />
           ) : null}
         </div>
-
+        <div className="my-3">
+          <label
+            htmlFor="path"
+            className="uppercase text-gray-600 block font-bold"
+          >
+            Path
+          </label>
+          <input
+            id="path"
+            type="text"
+            placeholder="path"
+            className="w-full mt-3 p-3 border rounded-xl bg-gray-50 "
+            style={{ display: "block" }}
+            name={"path"}
+            {...register("path")}
+          />
+          {errors.path ? (
+            <Alerta msg={errors.path?.message} error={true} />
+          ) : null}
+        </div>
+        <div className="my-3 flex gap-5">
+          <label
+            htmlFor="path"
+            className="uppercase text-gray-600 block font-bold"
+          >
+            Activo
+          </label>
+          <input type="checkbox" checked={checked} onChange={handleChange} />
+        </div>
         <div className="">
           <input
             type="submit"

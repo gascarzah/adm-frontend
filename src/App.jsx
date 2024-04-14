@@ -22,6 +22,8 @@ import ListarMenu from "./pages/menu";
 import AgregarMenu from "./pages/menu/Agregar";
 import EditarMenu from "./pages/menu/Editar";
 
+import MantenimientoRolMenu from "./pages/rolMenu";
+
 function App() {
   function NavigateFunctionComponent(props) {
     const navigate = useNavigate();
@@ -82,6 +84,8 @@ function App() {
               path="listar-menu/editar-menu/:id"
               element={<EditarMenu />}
             />
+
+            <Route path="listar-rol-menu" element={<MantenimientoRolMenu />} />
           </Route>
         </Routes>
       </BrowserRouter>
