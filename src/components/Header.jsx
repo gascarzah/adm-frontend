@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { headerResetState } from "../slices/authSlice";
+import { resetState } from "../slices/authSlice";
 import { useNavigate } from "react-router-dom";
 
 import { getUsuario } from "../slices/usuarioSlice";
@@ -30,7 +30,7 @@ const Header = () => {
 
   // console.log("en header ", user);
   const handleCerrarSesion = () => {
-    headerResetState();
+    resetState();
     localStorage.removeItem("token");
     navigate("/");
   };

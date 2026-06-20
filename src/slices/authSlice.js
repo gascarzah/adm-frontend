@@ -40,7 +40,7 @@ export const login = createAsyncThunk(
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: { headerResetState: () => initialState, },
+  reducers: { resetState: () => initialState, },
   // reducers: {},
   extraReducers(builder) {
     builder
@@ -71,7 +71,7 @@ const authSlice = createSlice({
 
 })
 
-export const { headerResetState } = authSlice.actions
+export const { resetState } = authSlice.actions
 export default authSlice.reducer
 
 

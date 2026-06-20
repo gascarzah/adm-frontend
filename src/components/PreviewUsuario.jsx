@@ -17,14 +17,14 @@ const PreviewUsuario = ({ usuario, handleDelete }) => {
           {usuario.empleado.empresa.nombre}
         </td>
         <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-          {usuario.empleado.persona.numeroDocumento}
+          {usuario.empleado.numeroDocumento}
         </td>
         <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-          {usuario.empleado.persona.apellidoPaterno +
+          {usuario.empleado.apellidoPaterno +
             " " +
-            usuario.empleado.persona.apellidoMaterno +
+            usuario.empleado.apellidoMaterno +
             ", " +
-            usuario.empleado.persona.nombres}
+            usuario.empleado.nombres}
         </td>
         <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap flex gap-2">
           <Link to={`editar-usuario/${usuario.idUsuario}`}>

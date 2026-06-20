@@ -3,7 +3,7 @@ import clienteAxios from '../config/axios';
 
 
 const initialState = {
-  loading: '',
+  loading: false,
   user: {},
   code: null,
   message: null,

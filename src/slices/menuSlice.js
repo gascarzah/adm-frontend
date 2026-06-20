@@ -3,12 +3,13 @@ import clienteAxios from '../config/axios';
 
 
 const initialState = {
-    loading: '',
+    loading: false,
     code: null,
     message: null,
     logged: false,
     menu: {},
     menus: [],
+    menusPorRol: [],
     total: [],
     prev: null,
     next: null,
@@ -107,18 +108,18 @@ export const getMenus = createAsyncThunk(
     }
 )
 
-export const getMenusPorRol = createAsyncThunk(
-    'getMenusPorRol',
-    async (values, { rejectWithValue }) => {
-        try {
-            const { data } = await clienteAxios.get(`/menus/rol`, values);
-            return data
-        } catch (error) {
+// export const getMenusPorRol = createAsyncThunk(
+//     'getMenusPorRol',
+//     async (values, { rejectWithValue }) => {
+//         try {
+//             const { data } = await clienteAxios.get(`/menus/rol`, values);
+//             return data
+//         } catch (error) {
 
-            return rejectWithValue(error.response.data)
-        }
-    }
-)
+//             return rejectWithValue(error.response.data)
+//         }
+//     }
+// )
 
 const menuslice = createSlice({
     name: 'menu',
@@ -182,7 +183,7 @@ const menuslice = createSlice({
                 state.loading = false
                 state.code = 201
                 state.message = 'se encontro'
-                state.menus = payload
+                state.menusPorRol = payload
             })
             .addCase(getMenus.rejected, (state, { payload }) => {
                 console.log('rejected getMenu payload', payload)
@@ -205,20 +206,20 @@ const menuslice = createSlice({
                 state.message = payload.message
                 state.menus = []
             })
-            .addCase(getMenusPorRol.fulfilled, (state, { payload }) => {
-                console.log('fulfilled getMenu payload', payload)
-                // state.loading = 'grabo'
-                state.loading = false
-                state.code = 201
-                state.message = 'se encontro'
-                state.menus = payload
-            })
-            .addCase(getMenusPorRol.rejected, (state, { payload }) => {
-                console.log('rejected getMenu payload', payload)
-                state.loading = false
-                state.code = payload.status
-                state.message = payload.message
-            })
+            // .addCase(getMenusPorRol.fulfilled, (state, { payload }) => {
+            //     console.log('fulfilled getMenu payload', payload)
+            //     // state.loading = 'grabo'
+            //     state.loading = false
+            //     state.code = 201
+            //     state.message = 'se encontro'
+            //     state.menus = payload
+            // })
+            // .addCase(getMenusPorRol.rejected, (state, { payload }) => {
+            //     console.log('rejected getMenu payload', payload)
+            //     state.loading = false
+            //     state.code = payload.status
+            //     state.message = payload.message
+            // })
     }
 
 

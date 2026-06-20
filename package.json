@@ -11,6 +11,7 @@
   "dependencies": {
     "@hookform/resolvers": "^3.0.1",
     "@reduxjs/toolkit": "^1.9.3",
+    "08-admin-frontend": "file:",
     "axios": "^1.3.5",
     "dayjs": "^1.11.7",
     "jwt-decode": "^3.1.2",
